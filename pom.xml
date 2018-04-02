@@ -7,9 +7,11 @@
     <groupId>com.test</groupId>
     <artifactId>spring-boot-test</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <packaging>war</packaging>
 
     <properties>
         <java.version>1.8</java.version>
+        <skipTests>true</skipTests>
     </properties>
 
     <!-- Inherit defaults from Spring Boot -->
@@ -26,15 +28,32 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
         </dependency>
     </dependencies>
     <!-- Package as an executable jar -->
     <build>
+        <finalName>spring-boot-test</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <finalName>spring-boot-test</finalName>
+                    <mainClass>com.test.springboot.Application</mainClass>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
