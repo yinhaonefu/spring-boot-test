@@ -1,46 +1,38 @@
 package com.test.springboot.controller;
 
-import com.test.springboot.Application;
-import com.test.springboot.service.MyService;
+import org.hamcrest.Matchers;
+import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.test.context.junit4.SpringRunner;
-
-import javax.annotation.Resource;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.BDDMockito.given;
+import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 /**
  * Created by yinhao on 18/3/28.
  */
-@RunWith(SpringRunner.class)
-@SpringBootTest(classes = Application.class,webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+
+@SpringBootTest
 public class MyControllerTest {
-    @Autowired
-    private TestRestTemplate restTemplate;
 
-    @Resource
-    private MyController myController;
+    private MockMvc mockMvc;
 
-    @MockBean
-    private MyService myService;
-
-    @Test
-    public void homeTest() {
-        String body = this.restTemplate.getForObject("/", String.class);
-        assertThat(body).isEqualTo("Hello World!");
+    @Before
+    public void setUp() {
+        mockMvc = MockMvcBuilders.standaloneSetup(new MyController()).build();
     }
 
     @Test
-    public void doSomethingTest(){
-        given(myService.doSomething()).willReturn("mock");
-        String s = myController.doSomething();
-        assertThat(s).isEqualTo("mock");
+    public void homeTest() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/").accept(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("Hello")));
+    }
+
+    @Test
+    public void doSomethingTest() {
+
     }
 
 }
