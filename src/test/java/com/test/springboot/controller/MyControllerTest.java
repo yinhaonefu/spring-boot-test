@@ -31,8 +31,24 @@ public class MyControllerTest {
     }
 
     @Test
-    public void doSomethingTest() {
+    public void getUserTest() throws Exception {
+        String string = mockMvc.perform(MockMvcRequestBuilders.get("/getUser")).andReturn().getResponse().getContentAsString();
+        System.out.println("result:" + string);
+    }
 
+    @Test
+    public void getUsersTest() throws Exception {
+        String string = mockMvc.perform(MockMvcRequestBuilders.get("/getUsers")).andReturn().getResponse().getContentAsString();
+        System.out.println("result:" + string);
+    }
+
+    @Test
+    public void saveUsers() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.post("/saveUser")
+                .param("name","")
+                .param("age","666")
+                .param("pass","test")
+        );
     }
 
 }
