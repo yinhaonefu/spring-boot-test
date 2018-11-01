@@ -22,6 +22,16 @@ public class User {
     @Length(min=6,message="密码长度不能小于6位")
     private String pass;
 
+    public User(){
+
+    }
+
+    public User(String name, int age, String pass) {
+        this.name = name;
+        this.age = age;
+        this.pass = pass;
+    }
+
     public String getName() {
         return name;
     }

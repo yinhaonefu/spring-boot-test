@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"></meta>
+    <title>Hello</title>
+</head>
+<body>
+<h1 th:text="${message}">Hello World</h1>
+<p th:text="${username}">neo</p>
+
+<!--字符串拼接-->
+<span th:text="'Welcome to our application, ' + ${username} + '!'"></span>
+<span th:text="|Welcome to our application, ${username}!|"></span>
+
+<a th:if="${flag == 'yes'}"  th:href="@{http://favorites.ren/}"> home </a>
+<a th:unless="${flag != 'no'}" th:href="@{http://www.ityouknow.com/}" >ityouknow</a>
+
+
+<table>
+    <tr  th:each="user,iterStat : ${users}">
+        <td th:text="${user.name}">neo</td>
+        <td th:text="${user.age}">6</td>
+        <td th:text="${user.pass}">213</td>
+        <td th:text="${iterStat.index}">index</td>
+    </tr>
+</table>
+
+<!--iterStat 称作状态变量，属性有：-->
+
+<!--index，当前迭代对象的 index（从 0 开始计算）；-->
+<!--count，当前迭代对象的 index（从 1 开始计算）；-->
+<!--size，被迭代对象的大小；-->
+<!--current，当前迭代变量；-->
+<!--even/odd，布尔值，当前循环是否是偶数/奇数（从 0 开始计算）；-->
+<!--first，布尔值，当前循环是否是第一个；-->
+<!--last，布尔值，当前循环是否是最后一个-->
+
+<!--URL-->
+<h1>URL</h1>
+<a  th:href="@{http://www.ityouknow.com/{type}(type=${type})}">link1</a>
+<br/>
+<a th:href="@{http://www.ityouknow.com/{pageId}/can-use-springcloud.html(pageId=${pageId})}">view</a>
+<br/>
+<div th:style="'background:url(' + @{${img}} + ');'">
+    <br/><br/><br/>
+</div>
+
+
+<h1>EQ</h1>
+<input th:value="${name}"/>
+<br/>
+<input th:value="${age gt 30 ? '中年':'年轻'}"/>
+<br/>
+<a th:if="${flag eq 'yes'}"  th:href="@{http://favorites.ren/}"> favorites
+
+    <!--gt：great than（大于）-->
+    <!--ge：great equal（大于等于）-->
+    <!--eq：equal（等于）-->
+    <!--lt：less than（小于）-->
+    <!--le：less equal（小于等于）-->
+    <!--ne：not equal（不等于）-->
+
+
+
+<div th:switch="${sex}">
+    <p th:case="'woman'">她是一个姑娘...</p>
+    <p th:case="'man'">这是一个爷们!</p>
+    <!-- *: case的默认的选项 -->
+    <p th:case="*">未知性别的一个家伙。</p>
+</div>
+</body>
+</html>
